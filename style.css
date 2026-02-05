@@ -1,0 +1,113 @@
+/* Background */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: url('BG_image.png') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+}
+
+/* Layout */
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 30%;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 40px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+}
+
+.sidebar h2 {
+  color: #00e0ff;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+  color: #ffdd57;
+}
+
+.dev {
+  margin-top: 30px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Main Section */
+.main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Glass Effect Box */
+.glass-box {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 15px;
+  padding: 40px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  width: 450px;
+}
+
+.glass-box h1 {
+  color: #00e0ff;
+  margin-bottom: 25px;
+}
+
+/* Input & Button */
+input[type="text"] {
+  width: 90%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(45deg, #007bff, #00e0ff);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #00e0ff, #007bff);
+}
+
+/* Result Box */
+.result {
+  margin-top: 30px;
+}
+
+.result p {
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.real {
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+.fake {
+  background-color: rgba(255, 0, 0, 0.3);
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Newsify Detector - Result</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background: linear-gradient(120deg, #0f172a 0%, rgba(2,6,23,0.8) 40%), 
+      url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1600&q=80') 
+      center/cover no-repeat fixed;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+    }
+    .card{
+      width:780px;
+      max-width:92%;
+      background:rgba(255,255,255,0.06);
+      border-radius:18px;
+      padding:36px 42px;
+      box-shadow:0 10px 40px rgba(2,6,23,0.7);
+      backdrop-filter:blur(8px);
+      text-align:left;
+    }
+    .title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .title h1{ margin:0; color:#00e0ff; font-size:1.4rem; letter-spacing:0.6px; }
+    .headline{
+      margin-top:16px;
+      padding:16px 18px;
+      background:rgba(0,0,0,0.35);
+      border-radius:12px;
+      font-size:1.05rem;
+    }
+    .result-block{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      margin-top:22px;
+    }
+    .icon{
+      width:96px; height:96px; border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:2.4rem;
+      box-shadow:0 6px 18px rgba(0,0,0,0.6);
+    }
+    .real-icon{ background:linear-gradient(135deg,#032f22,#056b3b); color:#b9ffd9; }
+    .fake-icon{ background:linear-gradient(135deg,#3a0202,#8b1e1e); color:#ffd6d6; }
+
+    .result-text{ flex:1; }
+    .result-text h2{ margin:0; font-size:1.6rem; }
+    .meta{ margin-top:6px; color:#cbd5e1; font-size:0.9rem; }
+
+    .details{
+      margin-top:20px;
+      background:rgba(0,0,0,0.28);
+      padding:14px;
+      border-radius:10px;
+      color:#e6eef7;
+      line-height:1.5;
+      font-size:0.98rem;
+    }
+
+    .sources{
+      margin-top:12px;
+      color:#9fb4c9;
+      font-size:0.9rem;
+    }
+
+    .controls{
+      display:flex;
+      gap:12px;
+      margin-top:24px;
+      justify-content:flex-end;
+    }
+    .btn{
+      padding:10px 18px;
+      border-radius:999px;
+      border:none; cursor:pointer;
+      font-weight:600;
+      background:linear-gradient(90deg,#007bff,#00e0ff);
+      color:#021026; text-decoration:none;
+    }
+    .btn.secondary{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:#fff; }
+
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="title">
+      <h1>Newsify Detector</h1>
+      <div style="font-size:0.9rem;color:#9fb4c9">Confidence: {{ confidence }}</div>
+    </div>
+
+    <div class="headline">“{{ headline }}”</div>
+
+    <div class="result-block">
+      {% if final == "Real News" %}
+        <div class="icon real-icon">✅</div>
+        <div class="result-text">
+          <h2 style="color:#b9ffd9">Real</h2>
+          <div class="meta">Reason: {{ reason }}</div>
+        </div>
+      {% elif final == "Fake News" %}
+        <div class="icon fake-icon">❌</div>
+        <div class="result-text">
+          <h2 style="color:#ffd6d6">Fake</h2>
+          <div class="meta">Reason: {{ reason }}</div>
+        </div>
+      {% else %}
+        <div class="icon" style="background:linear-gradient(135deg,#4b5563,#94a3b8)">?</div>
+        <div class="result-text">
+          <h2 style="color:#f3f4f6">Uncertain</h2>
+          <div class="meta">Reason: {{ reason }}</div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="details">{{ details }}</div>
+
+    <div class="sources">
+      <strong>Sources / References:</strong> {{ sources }}
+    </div>
+
+    <div class="controls">
+      <!-- Back button -->
+      <a href="/" class="btn secondary">Check Another</a>
+
+      <!-- Speak Result -->
+      <button onclick="speakResult()" class="btn">🔊 Speak</button>
+    </div>
+
+  </div>
+
+<script>
+function speakResult(){
+    let text = `Headline: {{ headline }}. Result: {{ final }}. Reason: {{ reason }}. Details: {{ details }}.`;
+    let speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 1;
+    speech.pitch = 1;
+    speech.lang = "en-US";
+    speechSynthesis.speak(speech);
+}
+</script>
+
+</body>
+</html>

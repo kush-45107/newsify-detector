@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsify Detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>📰 About Project</h2>
+      <p>
+        <b>Newsify Detector</b> detects whether a news headline is <b>Real</b> or <b>Fake</b> using <b>LLM</b>-powered fact-checking intelligence.
+        It uses the <b>API</b> to analyze authenticity in <b>real-time</b>, providing verdicts, reasoning, and confidence levels.
+      </p>
+      <hr>
+      <h3>⚙️ Built With:</h3>
+      <ul>
+        <li>Python</li>
+        <li>Flask</li>
+        <li>LLM</li>
+        <li>MySQL Database</li>
+        <li>HTML + CSS</li>
+      </ul>
+
+      <p class="dev">
+        👨‍💻 <b>Developed by:</b>
+        <ol>
+          <li>Kushagra</li>
+          <li>Shagun</li>
+          <li>Shivam</li>
+          <li>Ujjwal</li>
+        </ol>
+      </p>
+    </div>
+
+    <div class="main">
+      <div class="glass-box">
+        <h1>Newsify Detector</h1>
+
+        <form id="newsForm" method="POST">
+          <input id="headlineInput" type="text" name="headline" placeholder="Enter a news headline..." required>
+
+          <!-- MIC BUTTON -->
+          <button type="button" id="startMic" class="mic-btn">🎤 Speak</button>
+
+          <button type="submit">Check</button>
+        </form>
+
+        {% if final %}
+        <div class="result">
+          <h3>Predicted Result:</h3>
+          <p class="{{ 'fake' if 'Fake' in final else 'real' }}">{{ final }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEECH-TO-TEXT SCRIPT -->
+  <script>
+    const startBtn = document.getElementById('startMic');
+    const inputField = document.getElementById('headlineInput');
+    let recognition;
+
+    if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.lang = "en-IN";    // language
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      startBtn.addEventListener("click", () => {
+        recognition.start();
+        startBtn.innerText = "Listening...";
+      });
+
+      recognition.addEventListener("result", (e) => {
+        let text = e.results[0][0].transcript;
+        inputField.value = text;
+
+        // AUTO SUBMIT
+        document.getElementById('newsForm').submit();
+      });
+
+      recognition.addEventListener("end", () => {
+        startBtn.innerText = "🎤 Speak";
+      });
+
+    } else {
+      startBtn.innerText = "Speech Not Supported";
+      startBtn.disabled = true;
+    }
+  </script>
+
+  <style>
+    .mic-btn{
+      background: #1a73e8;
+      color:white;
+      border:none;
+      padding:8px 15px;
+      border-radius:8px;
+      cursor:pointer;
+      margin-left:5px;
+    }
+    .mic-btn:hover{
+      background:#0b57d0;
+    }
+  </style>
+
+</body>
+</html>
